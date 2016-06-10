@@ -284,3 +284,22 @@ public class PersistenceConfiguration {
 Any configuration java class that has public methods with the `@Bean` annotation, will get loaded on startup and the return value of these methods will be set as beans inside the spring context. This allows you to configure any bean to the spring context.
 
 ### Demo: Defining Multiple Datasources
+
+It's good practice to organize all config classes under the same package. Can be named anything, but good practice to include "Configuration" in name so its clear that its not a core application class. [Example](demo/src/main/java/com/boot/config/PersistenceConfiguration.java).
+
+Given this example:
+
+```java
+@Configuration
+public class PersistenceConfiguration {
+    @Bean
+    @ConfigurationProperties(prefix="spring.datasource")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+}
+```
+
+`@Bean` annotation tells spring and spring boot that the return value of this method needs to be setup and stored as a spring bean in the spring context.
+
+`@ConfigurationProperties(prefix="spring.datasource")` tells the data source builder to use the connection and pooling properties located in the application.properties file where the properties begin with "spring.datasource".
