@@ -302,4 +302,4 @@ public class PersistenceConfiguration {
 
 `@Bean` annotation tells spring and spring boot that the return value of this method needs to be setup and stored as a spring bean in the spring context.
 
-`@ConfigurationProperties(prefix="spring.datasource")` tells the data source builder to use the connection and pooling properties located in the application.properties file where the properties begin with "spring.datasource".
+`@ConfigurationProperties(prefix="spring.datasource")` tells the data source builder to use the connection and pooling properties located in the application.properties file where the properties begin with "spring.datasource" prefix.
