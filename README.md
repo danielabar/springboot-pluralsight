@@ -21,6 +21,7 @@
     - [DataSource configuration](#datasource-configuration)
     - [Demo: FlywayDB](#demo-flywaydb)
     - [Spring Boot Java Configuration](#spring-boot-java-configuration)
+    - [Demo: Defining Multiple Datasources](#demo-defining-multiple-datasources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -266,3 +267,20 @@ spring.jpa.hibernate.ddl-auto=none
 ```
 
 ### Spring Boot Java Configuration
+
+If you need to do some configuration that falls outside the auto configuration options. For example, to configure a datasource programmatically. This would be useful if you need to configure multiple data sources:
+
+```java
+@Configuration
+public class PersistenceConfiguration {
+  @Bean
+  @ConfigurationProperties(prefix="spring.datasource")
+  public DataSource dataSource() {
+    return DataSourceBuilder.create().build();
+  }
+}
+```
+
+Any configuration java class that has public methods with the `@Bean` annotation, will get loaded on startup and the return value of these methods will be set as beans inside the spring context. This allows you to configure any bean to the spring context.
+
+### Demo: Defining Multiple Datasources
