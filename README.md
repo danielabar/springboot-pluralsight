@@ -9,6 +9,12 @@
     - [Spring Boot Dependency Management](#spring-boot-dependency-management)
     - [Other Spring Boot Initializers](#other-spring-boot-initializers)
     - [How Does Spring Boot Work?](#how-does-spring-boot-work)
+    - [Why Move to Containerless Deployments?](#why-move-to-containerless-deployments)
+  - [Creating Web Apps](#creating-web-apps)
+    - [Demo: Creating REST Endpoints](#demo-creating-rest-endpoints)
+    - [Spring MVC Integration Overview](#spring-mvc-integration-overview)
+    - [Properties and Environmental Configuration](#properties-and-environmental-configuration)
+    - [Properties Examples](#properties-examples)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -117,3 +123,59 @@ With a container, need to:
 With containerless:
 
 * Runs anywhere Java is setup
+
+## Creating Web Apps
+
+### Demo: Creating REST Endpoints
+
+Spring MVC to create RESTful endpoints. All we have to do is write a controller, [example](demo/src/main/java/com/boot/controller/ShipwreckController.java).
+
+Behind the scenes, spring boot is handling the integration of spring mvc, then it sets up jackson/json library so that shipwreck info sent across http is automatically marshalled into and out of the Shipwreck.java model object.
+
+### Spring MVC Integration Overview
+
+Spring Boot automatically configured and integrate Spring MVC.
+
+Adding spring-boot-starter-web in pom.xml does more than simply including spring-mvc in classpath. Since we also have `@EnableAutoConfiguration` enabled, spring boot also sets up some spring mvc features:
+
+Sets up spring mvc view resolvers automatically. It sets up the content negotiating view resolver, which determines how to respond based off of content type. Since we're using JSON payloads, spring boot and spring mvc sets up the json-jackson library to handle content negotation views for application/json types.
+
+Spring boot configured and told spring-mvc to serve static resources located at root of classpath in static, public, or resources path.
+
+Spring boot sets up standard spring-mvc http message converters so it can use sensible defaults to convert json objects into java and vice versa. String encoding is set to UTF-8 out of the box.
+
+Also sets up customizable hooks to give you full control over how spring-mvc is integrated.
+
+### Properties and Environmental Configuration
+
+To change application behaviour from defaults provided by Spring boot. This can be done with `application.properties`.
+
+When application.properties file is placed at root of classpath (eg: `src/main/resources`), spring boot will load it and apply any of the property configurations to the application when it starts up.
+
+Application properties can also be provided YAML format.
+
+App properties can change from environment to environment, eg db credentials can be different in staging vs prod. To handle this, define additional properties file for each "profile" `application-{profile}.properties`. For example, `application-dev.properties`.
+
+Profile-specific app properties can be loaded over the main app properties file and any env-specific properties will be overridden.
+
+### Properties Examples
+
+Logging, no more need for log4j.xml, can do with properties, for example, to set package org.springframework.web to debug log level:
+
+```
+logging.level.org.springframework.web=DEBUG
+```
+
+To customize port for servlet container (default is 8080):
+
+```
+server.port=8181
+```
+
+To specify a profile to load, in the IDE run configuration, add a VM argument:
+
+```
+-Dspring.profiles.active=test
+```
+
+See [Spring Boot Docs](http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) for common appliation properties.
