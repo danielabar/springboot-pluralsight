@@ -15,6 +15,12 @@
     - [Spring MVC Integration Overview](#spring-mvc-integration-overview)
     - [Properties and Environmental Configuration](#properties-and-environmental-configuration)
     - [Properties Examples](#properties-examples)
+  - [Configuring and Accessing a Data Source](#configuring-and-accessing-a-data-source)
+    - [Identifying Frameworks for Integration](#identifying-frameworks-for-integration)
+    - [DemoL Provisioning and INtegrating a Database](#demol-provisioning-and-integrating-a-database)
+    - [DataSource configuration](#datasource-configuration)
+    - [Demo: FlywayDB](#demo-flywaydb)
+    - [Spring Boot Java Configuration](#spring-boot-java-configuration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -179,3 +185,84 @@ To specify a profile to load, in the IDE run configuration, add a VM argument:
 ```
 
 See [Spring Boot Docs](http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) for common appliation properties.
+
+## Configuring and Accessing a Data Source
+
+### Identifying Frameworks for Integration
+
+To setup a persistence layer, need to add JPA and Spring Data JPA.
+JPA ORM layer will talk to a database (will be using embeddable H2 database for this course, for simplicity).
+
+Should also incorporate FlywayDB Migrations, for ability to version and migrate data structure along with code.
+
+### DemoL Provisioning and INtegrating a Database
+
+* H2 dependency
+* Spring Boot Starter Data JPA (will detect H2 and auto configure/integrate)
+
+By pulling in these dependencies, spring boot pulls in all the required transitive dependencies:
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+<dependency>
+  <groupId>com.h2database</groupId>
+  <artifactId>h2</artifactId>
+</dependency>
+```
+
+Working with h2, enable console access via application.properties:
+
+```
+# Database
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2
+```
+
+Then retart app and access h2 at [http://localhost:8080/h2](http://localhost:8080/h2)
+
+### DataSource configuration
+
+Provide jdbc connection details via application.properties.
+
+Spring boot will also try to automatically set up DataSource pooling. If spring detects any of the common pooling libraries on the classpath, the auto configuration will integrate that pool and tie it in with the data source.
+
+`tomcat-jdbc` is default pooling strategy. Spring boot will also integrate with other pools.
+
+Datasource properties:
+
+```
+spring.datasource.url=jdbc:h2:file:~/dasboot
+spring.datasource.username=sa
+spring.datasource.password=
+spring.datasource.driver-class-name=org.h2.Driver
+```
+
+### Demo: FlywayDB
+
+Steps:
+
+* First add FlywayDB on classpath.
+* Configure flyway DataSource.
+* Create migration scripts.
+* Migrate on app startup (no need to run seprate command)
+
+Need to place flyway migration scripts on classpath. `resources/db/migration/V2__create_shipwreck.sql`. Name it V2 because flyway baselines at V1, so migrations start at V2.
+
+Spring boot will configure flyway with the datasource.
+
+Add this property to tell flyway if this is the first time migration is running, create the migrate metadata table so it can keep track of what version its on.
+
+```
+flyway.baseline-on-migrate=true
+```
+
+Also tell Hibernate (running as the JPA implementation), not to auto create any entities using the ddl of those entities:
+
+```
+spring.jpa.hibernate.ddl-auto=none
+```
+
+### Spring Boot Java Configuration
