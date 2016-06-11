@@ -309,3 +309,18 @@ public class PersistenceConfiguration {
 Convert model object to JPA entity by adding appropriate annotations. [Example](demo/src/main/java/com/boot/model/Shipwreck.java)
 
 Then need to crete repository for spring jpa tier. [Example](demo/src/main/java/com/boot/repository/ShipwreckRepository.java)
+
+Then autowire the repository into the controller:
+
+```java
+@RestController
+@RequestMapping("api/v1/")
+public class ShipwreckController {
+
+  @Autowired
+  private ShipwreckRepository shipwreckRepository;
+  ...
+}
+```
+
+Then replace stub methods with shipwreckRepository methods.
