@@ -22,6 +22,13 @@
     - [Demo: FlywayDB](#demo-flywaydb)
     - [Spring Boot Java Configuration](#spring-boot-java-configuration)
     - [Demo: Defining Multiple Datasources](#demo-defining-multiple-datasources)
+    - [Demo: Adding JPA and Spring Data JPA](#demo-adding-jpa-and-spring-data-jpa)
+  - [Testing the Spring Boot Project](#testing-the-spring-boot-project)
+    - [Getting Started with Spring Boot Testing](#getting-started-with-spring-boot-testing)
+    - [Demo: Wire up the Starter and Running Tests](#demo-wire-up-the-starter-and-running-tests)
+    - [Integration Testing Challenges](#integration-testing-challenges)
+    - [Demo: Integration Testing](#demo-integration-testing)
+    - [Demo: Web Integration Testing](#demo-web-integration-testing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
