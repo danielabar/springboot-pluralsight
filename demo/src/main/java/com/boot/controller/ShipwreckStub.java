@@ -1,11 +1,11 @@
 package com.boot.controller;
 
+import com.boot.model.Shipwreck;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.boot.model.Shipwreck;
 
 public class ShipwreckStub {
 	private static Map<Long, Shipwreck> wrecks = new HashMap<Long, Shipwreck>();

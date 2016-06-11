@@ -324,3 +324,32 @@ public class ShipwreckController {
 ```
 
 Then replace stub methods with shipwreckRepository methods.
+
+## Testing the Spring Boot Project
+
+### Getting Started with Spring Boot Testing
+
+First need to integrate testing framework, with spring boot, this means adding the spring-boot-starter-test dependency. This will integrate:
+
+* JUnit (unit testing)
+* Hamcrest (Matching and assertions)
+* Mockito (Mock objects and verify)
+* Spring Test (Testing tools and integration testing support)
+
+### Demo: Wire up the Starter and Running Tests
+
+To start, remove the JUnit dependency added by Maven quickstart archetype (since spring boot test starter will be adding this).
+
+Then add test dependency:
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+  <scope>test</scope>
+</dependency>
+```
+
+[Simple unit test](demo/src/test/java/com/boot/controller/HomeControllerTest.java) with no dependencies.
+
+[Unit test with Mockito](demo/src/test/java/com/boot/controller/ShipwreckControllerTest.java).
