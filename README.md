@@ -353,3 +353,33 @@ Then add test dependency:
 [Simple unit test](demo/src/test/java/com/boot/controller/HomeControllerTest.java) with no dependencies.
 
 [Unit test with Mockito](demo/src/test/java/com/boot/controller/ShipwreckControllerTest.java).
+
+May prefer to use Hamcrest assertions rather than JUnit, more declarative and easier to read:
+
+```java
+// junit assertion
+assertEquals(123L, result.getId().longValue());
+
+// hamcrest assertion
+assertThat(result.getId(), is(123L));
+```
+
+### Integration Testing Challenges
+
+Testing all parts of an application working together. In older spring apps (before spring boot), this was difficult because required starting up a container or mocking it. Also needed the spring context to be available, and this was slow to setup. Also if tests were changing data in database, needed a custom solution to ensure database state is consistent.
+
+Spring Boot solves _some_ of these integration issues:
+
+* No external container, easier to startup (recall spring boot apps are just a plain java app, with an embeddee container)
+* Spring context still required, but spring boot provides auto configuration
+* App/Test startup can still be slow though
+* Maintaining consistent database state is still an issue
+
+### Demo: Integration Testing
+
+To convert a JUnit test into an integration test:
+
+* Add `@RunWith(SpringJUnit4ClassRunner.class)` annotation to test class. This Spring-based test class runner is part of the Spring test tools that the test starter transitively included in the project.
+* Add `@SpringApplicationConfiguratinon` annotation to test class. This is a Spring Boot annotation and you supply your main class as the annotation parameter. This tells Spring Boot how to configure and start the application. This is like calling main void app, but embedded in the context of a unit test.
+
+[Example integration test](demo/src/test/java/com/boot/controller/ShipwreckControllerIntTest.java)

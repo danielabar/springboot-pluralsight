@@ -8,7 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +41,12 @@ public class ShipwreckControllerTest {
         when(mockShipwreckRepository.findOne(id)).thenReturn(shipwreck);
 
         Shipwreck result = fixture.get(id);
-        assertEquals(123L, result.getId().longValue());
+
+        // junit assertion
+//        assertEquals(123L, result.getId().longValue());
+
+        // hamcrest assertion
+        assertThat(result.getId(), is(123L));
 
         verify(mockShipwreckRepository).findOne(id);
     }
