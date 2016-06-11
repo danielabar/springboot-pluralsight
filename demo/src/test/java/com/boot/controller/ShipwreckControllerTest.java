@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ShipwreckControllerTest {
@@ -40,6 +41,8 @@ public class ShipwreckControllerTest {
 
         Shipwreck result = fixture.get(id);
         assertEquals(123L, result.getId().longValue());
+
+        verify(mockShipwreckRepository).findOne(id);
     }
 
 }
