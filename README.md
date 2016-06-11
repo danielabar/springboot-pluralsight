@@ -303,3 +303,9 @@ public class PersistenceConfiguration {
 `@Bean` annotation tells spring and spring boot that the return value of this method needs to be setup and stored as a spring bean in the spring context.
 
 `@ConfigurationProperties(prefix="spring.datasource")` tells the data source builder to use the connection and pooling properties located in the application.properties file where the properties begin with "spring.datasource" prefix.
+
+### Demo: Adding JPA and Spring Data JPA
+
+Convert model object to JPA entity by adding appropriate annotations. [Example](demo/src/main/java/com/boot/model/Shipwreck.java)
+
+Then need to crete repository for spring jpa tier. [Example](demo/src/main/java/com/boot/repository/ShipwreckRepository.java)
