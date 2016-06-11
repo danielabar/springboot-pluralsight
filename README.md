@@ -17,7 +17,7 @@
     - [Properties Examples](#properties-examples)
   - [Configuring and Accessing a Data Source](#configuring-and-accessing-a-data-source)
     - [Identifying Frameworks for Integration](#identifying-frameworks-for-integration)
-    - [DemoL Provisioning and INtegrating a Database](#demol-provisioning-and-integrating-a-database)
+    - [Demo: Provisioning and Integrating a Database](#demo-provisioning-and-integrating-a-database)
     - [DataSource configuration](#datasource-configuration)
     - [Demo: FlywayDB](#demo-flywaydb)
     - [Spring Boot Java Configuration](#spring-boot-java-configuration)
@@ -203,7 +203,7 @@ JPA ORM layer will talk to a database (will be using embeddable H2 database for 
 
 Should also incorporate FlywayDB Migrations, for ability to version and migrate data structure along with code.
 
-### DemoL Provisioning and INtegrating a Database
+### Demo: Provisioning and Integrating a Database
 
 * H2 dependency
 * Spring Boot Starter Data JPA (will detect H2 and auto configure/integrate)
